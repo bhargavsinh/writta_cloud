@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Writta — Shri Devdamanlal Technologies</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Noto+Serif+Gujarati:wght@400;500;600;700&family=Mukta:wght@400;500;700&family=Shrikhand&family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css" />
+
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0B0B0E" />
+<link rel="icon" href="icon-192.png" type="image/png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Writta" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-title">Writta</span>
+      <span class="brand-sub">Shri Devdamanlal Technologies (OPC) Private Limited</span>
+    </div>
+    <div class="top-actions">
+      <span id="save-indicator" class="save-indicator">સેવ થયું</span>
+      <button id="btn-toc-preview" class="btn-ghost" title="અનુક્રમણિકા જુઓ">📑 TOC</button>
+      <button id="btn-print" class="btn-ghost" title="Print / PDF પૂર્વાવલોકન">🖨️ પ્રિન્ટ / PDF</button>
+      <button id="btn-install" class="btn-ghost" style="display:none" title="App તરીકે Install કરો">⬇️ Install</button>
+      <button id="btn-theme" class="btn-icon" title="થીમ બદલો">🌙</button>
+    </div>
+  </header>
+
+  <div class="ribbon" id="ribbon">
+    <div class="ribbon-group">
+      <button data-cmd="undo" title="Undo">↶</button>
+      <button data-cmd="redo" title="Redo">↷</button>
+    </div>
+    <div class="ribbon-group">
+      <select id="font-family" title="ફોન્ટ">
+        <option value="'Noto Serif Gujarati', serif">Noto Serif Gujarati</option>
+        <option value="'Mukta', sans-serif">Mukta</option>
+        <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+        <option value="'Shrikhand', cursive">Shrikhand</option>
+        <option value="'Roboto', sans-serif">Roboto</option>
+      </select>
+      <select id="heading-select" title="શૈલી">
+        <option value="paragraph">પેરેગ્રાફ</option>
+        <option value="1">શીર્ષક 1</option>
+        <option value="2">શીર્ષક 2</option>
+        <option value="3">શીર્ષક 3</option>
+      </select>
+    </div>
+    <div class="ribbon-group">
+      <button data-cmd="bold" title="Bold"><b>B</b></button>
+      <button data-cmd="italic" title="Italic"><i>I</i></button>
+      <button data-cmd="underline" title="Underline"><u>U</u></button>
+      <button data-cmd="strike" title="Strikethrough"><s>S</s></button>
+    </div>
+    <div class="ribbon-group">
+      <button data-cmd="bulletList" title="બુલેટ લિસ્ટ">• ‒</button>
+      <button data-cmd="orderedList" title="ક્રમાંકિત લિસ્ટ">1. ‒</button>
+      <button data-cmd="blockquote" title="અવતરણ">❝</button>
+    </div>
+    <div class="ribbon-group">
+      <button id="btn-table" title="ટેબલ ઉમેરો">▦ Table</button>
+      <button id="btn-image" title="ફોટો ઉમેરો">🖼️ Image</button>
+      <button id="btn-pagebreak" title="નવું પાનું">⤓ Page Break</button>
+      <input type="file" id="image-input" accept="image/*" style="display:none" />
+    </div>
+    <div class="ribbon-group" id="table-tools" style="display:none">
+      <button id="btn-col-add">+કોલમ</button>
+      <button id="btn-row-add">+હરોળ</button>
+      <button id="btn-table-del">🗑 ટેબલ</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <aside class="sidebar" id="sidebar">
+      <div class="side-scroll" id="nav-tree"></div>
+      <div class="side-footer">કુલ શબ્દો: <span id="total-words">0</span></div>
+    </aside>
+
+    <main class="editor-wrap">
+      <!-- Structured meta form (half-title / title / copyright) -->
+      <div id="meta-form" class="tiptap-page meta-form" style="display:none"></div>
+      <!-- Rich text editor for all other sections -->
+      <div id="editor" class="tiptap-page"></div>
+    </main>
+  </div>
+
+  <div id="print-overlay" class="print-overlay" style="display:none">
+    <div class="print-toolbar no-print">
+      <span>પ્રિન્ટ પૂર્વાવલોકન — Ctrl/Cmd+P દબાવીને PDF તરીકે સેવ કરો</span>
+      <button id="btn-close-preview">✕ બંધ કરો</button>
+    </div>
+    <div id="print-preview"></div>
+  </div>
+
+  <div id="toc-modal" class="modal-overlay no-print" style="display:none">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span>📑 અનુક્રમણિકા (Table of Contents)</span>
+        <button id="btn-close-toc">✕</button>
+      </div>
+      <div id="toc-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

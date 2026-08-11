@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Writta — નવો ગ્રંથ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600&family=Noto+Serif+Gujarati:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0B0B0E" />
+<link rel="icon" href="icon-192.png" type="image/png" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-title">Writta</span>
+      <span class="brand-sub">Shri Devdamanlal Technologies (OPC) Private Limited</span>
+    </div>
+    <div class="top-actions">
+      <a href="./dashboard.html" class="btn-secondary">← Dashboard</a>
+    </div>
+  </header>
+
+  <div class="form-wrap">
+    <div class="form-title">નવો ગ્રંથ શરૂ કરો</div>
+    <div class="form-sub">લખવાનું શરૂ કરતાં પહેલાં ગ્રંથનું માળખું ગોઠવો — પછી બધું editor માં બદલી શકાશે.</div>
+
+    <form id="book-form">
+
+      <div class="form-block">
+        <h3>ગ્રંથ ઓળખ</h3>
+        <label>ગ્રંથનું નામ (Title)</label>
+        <input id="f-title" required value="અનામી ગ્રંથ" />
+        <label>ઉપશીર્ષક (Subtitle)</label>
+        <input id="f-subtitle" />
+        <label>લેખકનું નામ</label>
+        <input id="f-author" />
+        <div class="form-row">
+          <div><label>પ્રકાશક</label><input id="f-publisher" value="Shri Devdamanlal Technologies (OPC) Private Limited" /></div>
+          <div><label>સ્થળ</label><input id="f-place" /></div>
+        </div>
+        <div class="form-row">
+          <div><label>વર્ષ</label><input id="f-year" /></div>
+          <div><label>આવૃત્તિ</label><input id="f-edition" value="પ્રથમ આવૃત્તિ" /></div>
+        </div>
+        <label>ISBN (વૈકલ્પિક)</label>
+        <input id="f-isbn" />
+        <label>Copyright લખાણ</label>
+        <textarea id="f-copyright">© {year} {author}. સર્વાધિકાર સુરક્ષિત. આ ગ્રંથનો કોઈ પણ ભાગ પ્રકાશકની લેખિત મંજૂરી વિના પુનઃઉત્પાદિત કરી શકાશે નહીં.</textarea>
+      </div>
+
+      <div class="form-block">
+        <h3>પ્રારંભિક ભાગ (Front Matter)</h3>
+        <div class="hint" style="font-size:11px;color:var(--ink-faint);margin-bottom:10px;">Half Title, Title Page, Copyright Page અને Table of Contents દરેક ગ્રંથમાં આપોઆપ સામેલ છે. નીચેના વૈકલ્પિક છે:</div>
+        <div id="front-checks" class="check-grid"></div>
+      </div>
+
+      <div class="form-block">
+        <h3>મુખ્ય લખાણ — Parts &amp; Chapters</h3>
+        <div id="parts-builder" class="parts-builder"></div>
+        <button type="button" id="btn-add-part" class="add-link">+ નવો Part ઉમેરો</button>
+      </div>
+
+      <div class="form-block">
+        <h3>અંતિમ ભાગ (Back Matter)</h3>
+        <div id="back-checks" class="check-grid"></div>
+      </div>
+
+      <div class="form-submit-bar">
+        <a href="./dashboard.html" class="btn-secondary">રદ કરો</a>
+        <button type="submit" class="btn-primary">ગ્રંથ બનાવો અને લખવાનું શરૂ કરો</button>
+      </div>
+    </form>
+  </div>
+
+  <script type="module" src="bookform.js"></script>
+</body>
+</html>

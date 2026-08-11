@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Writta — Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0B0B0E" />
+<link rel="icon" href="icon-192.png" type="image/png" />
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="t">Writta</div>
+        <div class="s">Shri Devdamanlal Technologies (OPC) Private Limited</div>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Login</button>
+        <button class="auth-tab" data-tab="register">નવું ખાતું</button>
+      </div>
+
+      <form id="login-form">
+        <div class="auth-field"><label>Username</label><input id="login-username" autocomplete="username" required /></div>
+        <div class="auth-field"><label>Password</label><input id="login-password" type="password" autocomplete="current-password" required /></div>
+        <button type="submit" class="auth-submit">Login</button>
+      </form>
+
+      <form id="register-form" style="display:none">
+        <div class="auth-field"><label>તમારું નામ</label><input id="reg-name" required /></div>
+        <div class="auth-field"><label>Username</label><input id="reg-username" autocomplete="username" required /></div>
+        <div class="auth-field"><label>Password</label><input id="reg-password" type="password" autocomplete="new-password" required /></div>
+        <button type="submit" class="auth-submit">ખાતું બનાવો</button>
+      </form>
+
+      <div id="auth-error" class="auth-error" style="display:none"></div>
+      <div class="auth-note">આ ખાતું ફક્ત આ ડિવાઇસ / બ્રાઉઝર પર જ સચવાય છે — cloud sync નથી.</div>
+    </div>
+  </div>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>
