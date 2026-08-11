@@ -8,6 +8,7 @@ import Table from 'https://esm.sh/@tiptap/extension-table@2.11.5?deps=@tiptap/co
 import TableRow from 'https://esm.sh/@tiptap/extension-table-row@2.11.5?deps=@tiptap/core@2.11.5';
 import TableHeader from 'https://esm.sh/@tiptap/extension-table-header@2.11.5?deps=@tiptap/core@2.11.5';
 import TableCell from 'https://esm.sh/@tiptap/extension-table-cell@2.11.5?deps=@tiptap/core@2.11.5';
+import { requireSession, loadBookById, saveBookById } from './store.js';
 
 // ---------- Custom nodes ----------
 const PageBreak = Node.create({
@@ -93,31 +94,37 @@ function defaultBook() {
   };
 }
 
-const STORAGE_KEY = 'writta_book_v2';
-let book = loadBook();
-let saveTimer = null;
+// ================= સિક્યોરિટી અને બુક લોડિંગ =================
+const username = requireSession(); 
 
-function loadBook() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && parsed.meta && Array.isArray(parsed.parts)) return parsed;
-    }
-  } catch (e) {}
-  return defaultBook();
+const urlParams = new URLSearchParams(window.location.search);
+const bookId = urlParams.get('book');
+
+if (!bookId || !username) {
+  window.location.href = './dashboard.html';
 }
+
+let book = loadBookById(username, bookId);
+if (!book) {
+  alert("ક્ષમા કરશો, આ ગ્રંથ મળ્યો નથી.");
+  window.location.href = './dashboard.html';
+}
+
+let saveTimer = null;
 
 function saveBook() {
   document.getElementById('save-indicator').textContent = 'સેવ થાય છે…';
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(book));
+      saveBookById(username, bookId, book); 
       document.getElementById('save-indicator').textContent = 'સેવ થયું';
-    } catch (e) { document.getElementById('save-indicator').textContent = 'સેવ નિષ્ફળ'; }
+    } catch (e) { 
+      document.getElementById('save-indicator').textContent = 'સેવ નિષ્ફળ'; 
+    }
   }, 600);
 }
+
 
 function wordCount(html) {
   const text = (html || '').replace(/<[^>]*>/g, ' ').trim();
